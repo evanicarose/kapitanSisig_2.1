@@ -1,0 +1,41 @@
+<?php include('includes/header.php'); ?>
+
+<div class="container-fluid px-4">
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header">
+            <h4 class="mb-0">Add Supplier
+            <a href="suppliers.php" class="btn btn-outline-danger float-end">Back</a>
+            </h4>
+        </div>
+        <div class="card-body">
+           <?php alertMessage(); ?>
+           <form action="code.php" method="POST">
+                <div class="row">
+                    <!-- Supplier Information -->
+                    <div class="col-md-6 mb-3">
+                        <label for="firstname">First Name *</label>
+                        <input type="text" name="firstname" required class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastname">Last Name *</label>
+                        <input type="text" name="lastname" required class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="phonenumber">Phone Number *</label>
+                        <input type="text" name="phonenumber" required class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="address">Address *</label>
+                        <input type="text" name="address" required class="form-control">
+                    </div>
+
+                    <div class="col-md-12 mb-3 text-end">
+                        <button type="submit" name="saveSupplier" class="btn btn-outline-primary">Save Supplier</button>
+                    </div>
+                </div>
+           </form>
+        </div>
+    </div>
+</div>
+
+<?php include('includes/footer.php'); ?>
