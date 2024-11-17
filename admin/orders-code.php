@@ -253,7 +253,7 @@ if (isset($_POST['proceedToUpdateBtn'])) {
         $data = ['order_status' => $order_status];
         $updateResult = update('orders', $order_id, $data);
 
-        // If the order status is 'Preparing', update the product quantities
+        // If the order status is 'Preparing', update the product and ingredient quantities
         if ($order_status == 'Preparing') {
             // Loop through the order items and update the product quantities
             $orderItemsQuery = mysqli_query($conn, "SELECT * FROM order_items WHERE order_id='$order_id'");
@@ -268,18 +268,20 @@ if (isset($_POST['proceedToUpdateBtn'])) {
                 // Calculate the new product quantity
                 $newProductQuantity = $productData['quantity'] - $quantity;
 
-                // Update the product quantity
+                // Update product quantities
                 $productDataUpdate = [
                     'quantity' => $newProductQuantity
                 ];
 
-                // Update the product in the database
                 $updateProductResult = update('products', $productId, $productDataUpdate);
 
                 if (!$updateProductResult) {
                     jsonResponse(500, 'error', 'Failed to update product quantities');
                     exit();
                 }
+
+                // Update ingredient inventory based on the recipe
+                updateIngredientInventory($conn, $productId, $quantity);
             }
         }
 
@@ -292,6 +294,7 @@ if (isset($_POST['proceedToUpdateBtn'])) {
         jsonResponse(400, 'error', 'Invalid order ID or status');
     }
 }
+
 
 
 
